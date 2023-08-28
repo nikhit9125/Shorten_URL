@@ -12,6 +12,7 @@ def generate_short_code():
      return ''.join(random.choice(characters) for _ in range(8))
 
 def URL_Shortener(request):
+    current_domain=request.scheme + "://" + request.get_host()+"/"
 
     if request.method=='POST':
         originalurl=request.POST['Orginal_URL']
@@ -19,7 +20,8 @@ def URL_Shortener(request):
         try:
             existing_url=URL.objects.get(original_url=originalurl)
             # print(existing_url)
-            context={
+            context={ 
+                'current_domain':current_domain,
                 'shorten_url':existing_url.short_url,
                 'original_url':originalurl
             }
@@ -30,6 +32,7 @@ def URL_Shortener(request):
 
             new_url.save()
             context={
+                'current_domain':current_domain,
                 'shorten_url':short_code,
                 'original_url':originalurl
  
@@ -40,9 +43,6 @@ def URL_Shortener(request):
     return render(request,'url_shortener_app/home.html')
 
 def redirect_to_original(request,shorten_url):
-    print(shorten_url)
-    decoded_string = unquote(shorten_url)
-    print("decoded",decoded_string)
     try:
         url=URL.objects.get(short_url=shorten_url)
         return redirect(url.original_url)

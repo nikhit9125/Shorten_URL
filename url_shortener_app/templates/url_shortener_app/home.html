@@ -26,16 +26,23 @@
                 </div>
                 
                 </form>
-                <div>
-                <a href="{% url 'redirect_to_original' {{shorten_url}}|urlencode %}" name="shorten_url">
-                    {{shorten_url}}
+                <div class="mt-5">
+                    {% load custom_tags %}
+                <a href="{% redirect_url_with_short_code 'shorten_url' %}" id="shorten-link" style="color: gray; cursor:not-allowed; text-decoration: none;">
+                   Shorten URL - {{current_domain}}{{shorten_url}}
                 </a>
+                
                 </div>
             </div>
         
     
         
       </div>
+      <script>
+        document.getElementById("shorten-link").addEventListener("click", function(event) {
+            event.preventDefault();
+        });
+    </script>
     
     
     
