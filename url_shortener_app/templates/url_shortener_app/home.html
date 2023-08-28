@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1 style= "text-align: center; color: blue; margin-top: 20px;">
-        URL Shortner
+        URL Shortener
     </h1><br>
     <div class="container" style=" display:flex;justify-content: center;">
     
@@ -27,7 +27,7 @@
                 
                 </form>
                 <div>
-                <a href="{{original_url}}">
+                <a href="{% url 'redirect_to_original' {{shorten_url}}|urlencode %}" name="shorten_url">
                     {{shorten_url}}
                 </a>
                 </div>

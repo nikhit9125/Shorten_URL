@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import *
+from urllib.parse import unquote
 
 # Create your views here.
 import random
@@ -38,13 +39,15 @@ def URL_Shortener(request):
             return render(request,'url_shortener_app/home.html',context)
     return render(request,'url_shortener_app/home.html')
 
-# def redirect_to_original(request,shorten_url):
-#     print(shorten_url)
-#     try:
-#         url=URL.objects.get(short_url=shorten_url)
-#         return redirect(url.original_url)
+def redirect_to_original(request,shorten_url):
+    print(shorten_url)
+    decoded_string = unquote(shorten_url)
+    print("decoded",decoded_string)
+    try:
+        url=URL.objects.get(short_url=shorten_url)
+        return redirect(url.original_url)
 
-#     except URL.DoesNotExist:  
+    except URL.DoesNotExist:  
 
-#      return render(request,'url_shortener_app/home.html',{'error':'Short URL Not Found'})
+     return render(request,'url_shortener_app/home.html',{'error':'Short URL Not Found'})
     
